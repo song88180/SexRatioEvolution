@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+    <link rel="stylesheet" href="static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
+</head>
+<body>
+
+
+
+    <div class="flex-container">
+
+        <div>
+            <canvas id="NPopChart" height="300px" width="600px"></canvas>
+            <br>
+            <canvas id="SexAgeChart" height="300px" width="600px"></canvas>
+            <br>
+            <canvas id="AlleleChart" height="300px" width="600px"></canvas>
+            <br>
+            <canvas id="SexRatioChart" height="300px" width="600px"></canvas>
+            <br>
+            <canvas id="BirthSexRatioChart" height="300px" width="600px"></canvas>
+        </div>
+
+        <div id="control-panel">
+            <div id="control-buttons" class="flex-container">
+                <button id="run-pause-button" class="button">Run!</button>
+                <button id="restart-button" class="button">Restart</button>
+                <button id="reset-button" class="button">Reset</button>
+            </div>
+
+            {% for section_name, section_dict in control_panel_dict.items() %}
+                <div id={{ section_name }}>
+                    <div class="section-title flex-container">
+                        <p>{{ section_name }}</p>
+                        {% if section_dict.options.switch %}
+                        <input class="toggle" type="checkbox" />
+                        {% endif %}
+                    </div>
+                    <div id={{ section_name+"_body" }}>
+                    {% for param, param_dict in section_dict.params.items() %}
+                        <div class="flex-container">
+                            <div class="param-name-text tooltip">{{ param }}<span class="tooltiptext">{{ param_dict.explanation }}</span></div>
+                            {% if param_dict.type == "list" %}
+                                <div class="flex-item-right inline-popups">
+                                    <a class="small_button" id={{ param }} href={{ "#"+param+"_list" }} data-effect="mfp-zoom-in">Adjust</a>
+                                </div>
+                                <div id={{ param+"_list" }} class="white-popup mfp-with-anim mfp-hide">
+                                    <div class="common-title">{{ param }}</div>
+                                    <div class="vertical-sliders flex-container">
+                                        <div style="margin-right: 5px">
+                                            <div>value: </div>
+                                            <input type="range" orient="vertical" style="visibility: hidden"/>
+                                            <div style="margin-top:auto">Age: </div>
+                                        </div>
+                                        {%  for i in range(0,11) %}
+                                            <div style="text-align: center">
+                                                <div id={{ param + "_" + i|string + "_value"}} ></div>
+                                                <input id={{ param + "_" + i|string }} type="range"
+                                                       min={{ param_dict.min }} max={{ param_dict.max }}
+                                                       value="0" step=0.01 orient="vertical"/>
+                                                <div>{{ i }}</div>
+                                            </div>
+                                        {% endfor %}
+                                        <div style="text-align: center; margin-left:15px; ">
+                                            <div style="visibility: hidden">0</div>
+                                            <input id={{ param+"_all" }} type="range"
+                                                   min={{ param_dict.min }} max={{ param_dict.max }}
+                                                   value={{ (param_dict.min+param_dict.max)/2 }}
+                                                   step=0.01 orient="vertical"/>
+                                            <div>All</div>
+                                        </div>
+                                    </div>
+                                    <a id={{ param+"_set_same" }} class="small_button center" >Same as the other sex</a>
+                                </div>
+
+                            {% elif param_dict.type == "value" %}
+                                <div style="margin-left: 10px" id={{ param+"_value" }}></div>
+                                <input class="flex-item-right" id={{ param }} min={{ param_dict.min }} max={{ param_dict.max }} value="0" step={{ param_dict.step }} type="range" />
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script src="static/index.js"></script>
+</body>
+</html>

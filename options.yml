@@ -1,0 +1,41 @@
+Primary_reproduction_rate_with_age_male: {
+    0: 0, 1: 0, 2: 0.4, 3: 0.4, 4: 0.4, 5: 0.4, 6: 0.4, 7: 0.4, 8: 0.4, 9: 0.4, 10: 0
+}
+
+Primary_reproduction_rate_with_age_female: {
+    0: 0, 1: 0, 2: 0.4, 3: 0.4, 4: 0.4, 5: 0.4, 6: 0.4, 7: 0.4, 8: 0.4, 9: 0.4, 10: 0
+}
+
+Primary_mortality_with_age_male: {
+    0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 1
+}
+
+Primary_mortality_with_age_female: {
+    0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 1
+}
+
+# setting random: True will make simulation very slow
+# random: false
+
+Population_growth: true
+MORTALITY_COEFFICIENT: 4.0E-12
+
+Parental_investment: false
+PI_son_coef: {
+    0: -0.1, 1: -0.1, 2: -0.1, 3: -0.1, 4: -0.1, 5: -0.1, 6: -0.1, 7: -0.1, 8: -0.1, 9: -0.1, 10: -0.1
+}
+PI_daughter_coef: {
+    0: -0.1, 1: -0.1, 2: -0.1, 3: -0.1, 4: -0.1, 5: -0.1, 6: -0.1, 7: -0.1, 8: -0.1, 9: -0.1, 10: -0.1
+}
+
+Parental_care: false
+Father_coef: 0
+Mother_coef: 0.4
+
+Mating_willingness: false
+MW_son_coef: -0.15
+MW_daughter_coef: -0.15
+
+Sibling_effect: false
+Bro_coef: -0.2
+Sis_coef: 0.2
